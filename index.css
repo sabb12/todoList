@@ -1,0 +1,130 @@
+body,
+h2,
+form,
+button,
+input {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  width: 300px;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.container,
+.completed_List {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 400px;
+  min-height: 100px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.pagination,
+.pagination_list {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.pagination button,
+.pagination_list button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button:hover,
+.pagination_list button:hover {
+  background-color: #0056b3;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fafafa;
+}
+
+.todo-item div,
+.todo-item input[type="text"],
+.todo-item button,
+.todo-item input[type="checkbox"] {
+  margin: 0 5px;
+}
+
+.todo-item button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.todo-item button:hover {
+  background-color: #c82333;
+}
+
+.todo-item button.edit-btn {
+  background-color: #007bff;
+}
+
+.todo-item button.edit-btn:hover {
+  background-color: #0056b3;
+}
+
+.todo-item input[type="text"] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+}
