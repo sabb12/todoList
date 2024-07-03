@@ -1,3 +1,4 @@
+/* Reset and base styles */
 body,
 h2,
 form,
@@ -17,6 +18,7 @@ body {
   padding: 20px;
 }
 
+/* Form styling */
 form {
   display: flex;
   margin-bottom: 20px;
@@ -44,22 +46,27 @@ button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
+/* Header and section headings */
 h2 {
   color: #333;
   margin-bottom: 10px;
 }
 
+/* List container styles */
 .container,
 .completed_List {
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 400px;
-  min-height: 100px;
+  width: 100%;
+  max-width: 600px; /* Adjusted for responsiveness */
+  height: 300px; /* Set a fixed height */
+  overflow-y: auto; /* Enable vertical scrollbar */
   padding: 10px;
   margin-bottom: 20px;
 }
 
+/* Pagination styling */
 .pagination,
 .pagination_list {
   display: flex;
@@ -83,6 +90,7 @@ h2 {
   background-color: #0056b3;
 }
 
+/* Individual todo item styles */
 .todo-item {
   display: flex;
   justify-content: space-between;
@@ -127,4 +135,18 @@ h2 {
   border-radius: 4px;
   padding: 5px;
   width: 150px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  input[type="text"] {
+    width: 100%;
+  }
+
+  .container,
+  .completed_List {
+    width: 100%;
+    height: auto; /* Reset height for smaller screens */
+    max-height: 300px; /* Limit maximum height */
+  }
 }
