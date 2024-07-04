@@ -111,20 +111,20 @@ button.addEventListener("submit", (e) => {
 
 const createNewElement = (data, index) => {
   const li = document.createElement("div");
-  const containerForLi = document.createElement("div");
+  const containerForLi = document.createElement("input"); // Changed to input
   const complete = document.createElement("input");
   const remove = document.createElement("button");
   const edit = document.createElement("button");
-  const label = document.createElement("input");
 
   li.dataset.id = index;
   li.classList.add("todo-item");
-  containerForLi.textContent = data;
-  label.value = data;
-  label.style.display = "none";
+
+  containerForLi.value = data; // Set input value
+  containerForLi.disabled = true; // Disable input initially
 
   complete.type = "checkbox";
   complete.checked = false;
+
   remove.type = "button";
   remove.innerHTML = "Remove";
 
@@ -156,19 +156,18 @@ const createNewElement = (data, index) => {
   edit.addEventListener("click", () => {
     if (edit.innerHTML === "Edit") {
       edit.innerText = "Save";
-      label.style.display = "block";
+      containerForLi.disabled = false; // Enable input for editing
     } else {
-      containerForLi.textContent = label.value;
+      tenPerPage[index] = containerForLi.value; // Update data with new input value
       edit.innerText = "Edit";
-      label.style.display = "none";
+      containerForLi.disabled = true; // Disable input after editing
     }
   });
 
+  li.appendChild(complete);
   li.appendChild(containerForLi);
-  li.appendChild(label);
   li.appendChild(remove);
   li.appendChild(edit);
-  li.appendChild(complete);
 
   return li;
 };
