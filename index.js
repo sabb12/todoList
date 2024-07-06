@@ -111,6 +111,8 @@ button.addEventListener("submit", (e) => {
 
 const createNewElement = (data, index) => {
   const li = document.createElement("div");
+  const inputLi = document.createElement("div");
+  const buttonLi = document.createElement("div");
   const containerForLi = document.createElement("input"); // Changed to input
   const complete = document.createElement("input");
   const remove = document.createElement("button");
@@ -118,6 +120,8 @@ const createNewElement = (data, index) => {
 
   li.dataset.id = index;
   li.classList.add("todo-item");
+  inputLi.classList.add("inputLi");
+  buttonLi.classList.add("buttonLi");
 
   containerForLi.value = data; // Set input value
   containerForLi.disabled = true; // Disable input initially
@@ -164,10 +168,14 @@ const createNewElement = (data, index) => {
     }
   });
 
-  li.appendChild(complete);
-  li.appendChild(containerForLi);
-  li.appendChild(remove);
-  li.appendChild(edit);
+  inputLi.appendChild(complete);
+  inputLi.appendChild(containerForLi);
+
+  buttonLi.appendChild(remove);
+  buttonLi.appendChild(edit);
+
+  li.appendChild(inputLi);
+  li.appendChild(buttonLi);
 
   return li;
 };
