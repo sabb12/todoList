@@ -4,28 +4,28 @@ const input = document.getElementById("txt");
 const completed_List = document.querySelector(".completed_List");
 const list = document.querySelector(".container");
 
-const pagination = document.querySelector("pagination");
+const pagination = document.querySelector(".pagination");
 const pageBtn = document.getElementById("pageBtn");
 
 const pageList = document.querySelector(".pagination_list");
 
+let activeTodos = [];
+let completedTodos = [];
 let totalItemCount = 0;
 let pageIndex = 0; // Current page
 const maximumPerPage = 10;
 const maximumIndexButtonPerPage = 5;
 let buttonPageIndex = 0;
 
-const tenPerPage = [];
-
 const backToPreviousPage = () => {
   if (
-    pageIndex * maximumPerPage >= tenPerPage.length &&
-    tenPerPage.length > 0
+    pageIndex * maximumPerPage >= activeTodos.length &&
+    activeTodos.length > 0
   ) {
     pageIndex--;
     if (
       Math.floor(
-        (tenPerPage.length - 1) / (maximumIndexButtonPerPage * maximumPerPage)
+        (activeTodos.length - 1) / (maximumIndexButtonPerPage * maximumPerPage)
       ) < Math.floor(buttonPageIndex / maximumIndexButtonPerPage)
     ) {
       buttonPageIndex -= maximumIndexButtonPerPage;
@@ -41,17 +41,22 @@ const render = () => {
     i < 10 + pageIndex * maximumPerPage;
     i++
   ) {
-    if (!tenPerPage[i]) break;
-    const newElement = createNewElement(tenPerPage[i], i);
+    if (!activeTodos[i]) break;
+    const newElement = createNewElement(activeTodos[i], i, false);
     list.appendChild(newElement);
   }
+  completed_List.innerHTML = "";
+  completedTodos.forEach((item, index) => {
+    const newElement = createNewElement(item, index, true);
+    completed_List.appendChild(newElement);
+  });
   createPaginationButtons();
 };
 
 const getPageButtonCount = () => {
   const buttonCount =
     Math.ceil(
-      (tenPerPage.length - buttonPageIndex * maximumPerPage) / maximumPerPage
+      (activeTodos.length - buttonPageIndex * maximumPerPage) / maximumPerPage
     ) + buttonPageIndex;
   return buttonCount - buttonPageIndex > maximumIndexButtonPerPage
     ? maximumIndexButtonPerPage + buttonPageIndex
@@ -73,8 +78,9 @@ const createPaginationButtons = () => {
   }
 
   if (
-    maximumIndexButtonPerPage < Math.ceil(tenPerPage.length / maximumPerPage) &&
-    tenPerPage.length - buttonPageIndex * 10 > 50
+    maximumIndexButtonPerPage <
+      Math.ceil(activeTodos.length / maximumPerPage) &&
+    activeTodos.length - buttonPageIndex * 10 > 50
   ) {
     const btn_next = document.createElement("button");
     btn_next.type = "button";
@@ -102,77 +108,81 @@ const createPaginationButtons = () => {
 
 button.addEventListener("submit", (e) => {
   e.preventDefault();
-  tenPerPage.push(input.value);
+  activeTodos.push(input.value);
   input.value = "";
   totalItemCount++;
   pageBtn.innerHTML = totalItemCount;
   render();
 });
 
-const createNewElement = (data, index) => {
+const createNewElement = (data, index, isCompleted) => {
   const li = document.createElement("div");
   const inputLi = document.createElement("div");
   const buttonLi = document.createElement("div");
-  const containerForLi = document.createElement("input"); // Changed to input
+  const containerForLi = document.createElement("input");
   const complete = document.createElement("input");
   const remove = document.createElement("button");
-  const edit = document.createElement("button");
 
   li.dataset.id = index;
   li.classList.add("todo-item");
   inputLi.classList.add("inputLi");
   buttonLi.classList.add("buttonLi");
 
-  containerForLi.value = data; // Set input value
-  containerForLi.disabled = true; // Disable input initially
+  containerForLi.value = data;
+  containerForLi.disabled = true;
 
   complete.type = "checkbox";
-  complete.checked = false;
+  complete.checked = isCompleted;
 
   remove.type = "button";
   remove.innerHTML = "Remove";
 
-  edit.type = "button";
-  edit.innerHTML = "Edit";
-
   complete.addEventListener("click", () => {
     if (complete.checked) {
-      completed_List.appendChild(li);
+      completedTodos.push(activeTodos.splice(index, 1)[0]);
       totalItemCount--;
-      pageBtn.innerHTML = totalItemCount;
     } else {
-      list.appendChild(li);
+      activeTodos.push(completedTodos.splice(index, 1)[0]);
       totalItemCount++;
-      pageBtn.innerHTML = totalItemCount;
     }
-  });
-
-  remove.addEventListener("click", (e) => {
-    if (totalItemCount > 0) {
-      totalItemCount--;
-      pageBtn.innerHTML = totalItemCount;
-    }
-    const index = e.target.parentElement.dataset.id;
-    tenPerPage.splice(index, 1);
+    pageBtn.innerHTML = totalItemCount;
     render();
   });
 
-  edit.addEventListener("click", () => {
-    if (edit.innerHTML === "Edit") {
-      edit.innerText = "Save";
-      containerForLi.disabled = false; // Enable input for editing
+  remove.addEventListener("click", (e) => {
+    if (isCompleted) {
+      completedTodos.splice(index, 1);
     } else {
-      tenPerPage[index] = containerForLi.value; // Update data with new input value
-      edit.innerText = "Edit";
-      containerForLi.disabled = true; // Disable input after editing
+      activeTodos.splice(index, 1);
+      totalItemCount--;
     }
+    pageBtn.innerHTML = totalItemCount;
+    render();
   });
 
   inputLi.appendChild(complete);
   inputLi.appendChild(containerForLi);
 
   buttonLi.appendChild(remove);
-  buttonLi.appendChild(edit);
+
+  if (!isCompleted) {
+    const edit = document.createElement("button");
+    edit.type = "button";
+    edit.innerHTML = "Edit";
+
+    edit.addEventListener("click", () => {
+      if (edit.innerHTML === "Edit") {
+        edit.innerText = "Save";
+        containerForLi.disabled = false;
+      } else {
+        activeTodos[index] = containerForLi.value;
+        edit.innerText = "Edit";
+        containerForLi.disabled = true;
+      }
+    });
+
+    buttonLi.appendChild(edit);
+  }
 
   li.appendChild(inputLi);
   li.appendChild(buttonLi);
