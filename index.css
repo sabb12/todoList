@@ -122,46 +122,54 @@ h2 {
   flex: 1;
   display: flex;
   align-items: center;
+  margin-right: 20px; /* Add margin for spacing */
 }
 
-.inputLi input[type="text"] {
+.inputLi input[type="text"],
+.inputValue {
   flex: 1;
-  border: 1px solid #ccc;
   padding: 15px;
   font-size: 16px;
   border-radius: 8px;
   outline: none;
   background-color: #ffffff;
-  width: 100%; /* Take up full width */
-  box-sizing: border-box; /* Ensure padding is included in width */
+  width: 100%;
+  box-sizing: border-box;
+  border: none; /* Hide border */
+}
+
+.inputLi input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 15px;
 }
 
 .buttonLi {
   display: flex;
-  gap: 10px; /* Spacing between buttons */
+  gap: 10px;
 }
 
 .buttonLi button {
   background-color: #dc3545;
   color: white;
   border: none;
-  padding: 15px 20px; /* Adjusted padding for better spacing */
+  padding: 15px 20px;
   cursor: pointer;
   border-radius: 8px;
   transition: background-color 0.3s ease;
-  min-width: 100px; /* Ensure buttons have a minimum width */
+  min-width: 100px;
 }
 
 .buttonLi button:hover {
   background-color: #c82333;
 }
 
-.buttonLi button.edit-btn {
-  background-color: #007bff;
+.buttonLi button.removeBtn {
+  background-color: #17a2b8;
 }
 
-.buttonLi button.edit-btn:hover {
-  background-color: #0056b3;
+.buttonLi button.removeBtn:hover {
+  background-color: #138496;
 }
 
 /* Completed list */

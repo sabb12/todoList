@@ -130,12 +130,14 @@ const createNewElement = (data, index, isCompleted) => {
 
   containerForLi.value = data;
   containerForLi.disabled = true;
+  containerForLi.classList.add("inputValue");
 
   complete.type = "checkbox";
   complete.checked = isCompleted;
 
   remove.type = "button";
   remove.innerHTML = "Remove";
+  remove.classList.add("removeBtn");
 
   complete.addEventListener("click", () => {
     if (complete.checked) {
