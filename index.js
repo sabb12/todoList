@@ -5,8 +5,6 @@ const completed_List = document.querySelector(".completed_List");
 const list = document.querySelector(".container");
 
 const pagination = document.querySelector(".pagination");
-const pageBtn = document.getElementById("pageBtn");
-
 const pageList = document.querySelector(".pagination_list");
 
 let activeTodos = [];
@@ -108,10 +106,15 @@ const createPaginationButtons = () => {
 
 button.addEventListener("submit", (e) => {
   e.preventDefault();
-  activeTodos.push(input.value);
+  const inputValue = input.value.trim();
+  if (!inputValue) {
+    console.log("Empty input, not adding todo.");
+    return;
+  }
+  console.log("Adding todo:", inputValue);
+  activeTodos.push(inputValue);
   input.value = "";
   totalItemCount++;
-  pageBtn.innerHTML = totalItemCount;
   render();
 });
 
@@ -147,7 +150,6 @@ const createNewElement = (data, index, isCompleted) => {
       activeTodos.push(completedTodos.splice(index, 1)[0]);
       totalItemCount++;
     }
-    pageBtn.innerHTML = totalItemCount;
     render();
   });
 
@@ -158,7 +160,6 @@ const createNewElement = (data, index, isCompleted) => {
       activeTodos.splice(index, 1);
       totalItemCount--;
     }
-    pageBtn.innerHTML = totalItemCount;
     render();
   });
 
